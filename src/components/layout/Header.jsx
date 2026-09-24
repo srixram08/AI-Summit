@@ -7,7 +7,9 @@ import {
   LayoutDashboard,
   CheckCircle2,
   RefreshCw,
-  Terminal
+  Terminal,
+  LogOut,
+  User
 } from 'lucide-react';
 import { StatusDot } from '../common/StatusDot';
 
@@ -16,7 +18,9 @@ export function Header({
   onSelectTab, 
   demoMode, 
   setDemoMode, 
-  lastSyncTime = 'just now' 
+  lastSyncTime = 'just now',
+  user,
+  onLogout
 }) {
   const titles = {
     dashboard: {
@@ -36,23 +40,23 @@ export function Header({
   const currentInfo = titles[currentTab] || titles.dashboard;
 
   return (
-    <header className="sticky top-0 z-30 bg-[#080c14]/90 backdrop-blur-md border-b border-slate-800/80 px-4 sm:px-6 py-3.5 transition-all">
+    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-[#e2ede5] px-4 sm:px-6 py-3.5 transition-all shadow-[0_2px_12px_-4px_rgba(9,34,24,0.03)]">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         {/* Left: Title & Subtitle */}
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
+            <h1 className="text-lg sm:text-xl font-extrabold text-[#092218] tracking-tight flex items-center gap-2 font-sans">
               {currentInfo.title}
             </h1>
-            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
-              <StatusDot status="healthy" size="sm" />
-              <span className="font-semibold tracking-wider">LIVE</span>
+            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#d7f2df] border border-[#b9e5c5] text-[#0d5934] text-xs font-mono font-semibold">
+              <span className="w-2 h-2 rounded-full bg-[#10b981] animate-pulse" />
+              <span className="tracking-wider">LIVE</span>
             </div>
-            <span className="hidden sm:inline-block text-xs text-slate-400 font-mono">
-              Last updated: {lastSyncTime}
+            <span className="hidden sm:inline-block text-xs text-[#698a78] font-mono">
+              Synced: {lastSyncTime}
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-[#526d60] mt-0.5 font-sans">
             {currentInfo.subtitle}
           </p>
         </div>
@@ -60,27 +64,27 @@ export function Header({
         {/* Right: Controls & Demo Mode */}
         <div className="flex items-center gap-3 self-end md:self-auto">
           {/* Mobile Tab Switcher */}
-          <div className="flex md:hidden bg-slate-900 border border-slate-800 rounded-lg p-1 text-xs">
+          <div className="flex md:hidden bg-[#edf5ee] border border-[#d8e6db] rounded-xl p-1 text-xs">
             <button
               onClick={() => onSelectTab('dashboard')}
-              className={`px-2.5 py-1 rounded font-medium ${
-                currentTab === 'dashboard' ? 'bg-emerald-500/20 text-emerald-300' : 'text-slate-400'
+              className={`px-2.5 py-1 rounded-lg font-semibold transition-all ${
+                currentTab === 'dashboard' ? 'bg-[#092218] text-white shadow-xs' : 'text-[#526d60]'
               }`}
             >
               Dash
             </button>
             <button
               onClick={() => onSelectTab('digital-twin')}
-              className={`px-2.5 py-1 rounded font-medium ${
-                currentTab === 'digital-twin' ? 'bg-emerald-500/20 text-emerald-300' : 'text-slate-400'
+              className={`px-2.5 py-1 rounded-lg font-semibold transition-all ${
+                currentTab === 'digital-twin' ? 'bg-[#092218] text-white shadow-xs' : 'text-[#526d60]'
               }`}
             >
               Twin
             </button>
             <button
               onClick={() => onSelectTab('assurance')}
-              className={`px-2.5 py-1 rounded font-medium ${
-                currentTab === 'assurance' ? 'bg-emerald-500/20 text-emerald-300' : 'text-slate-400'
+              className={`px-2.5 py-1 rounded-lg font-semibold transition-all ${
+                currentTab === 'assurance' ? 'bg-[#092218] text-white shadow-xs' : 'text-[#526d60]'
               }`}
             >
               Assurance
@@ -88,22 +92,22 @@ export function Header({
           </div>
 
           {/* Local Simulation Badge */}
-          <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-[11px] font-mono text-slate-400">
-            <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-            <span>LOCAL SIMULATION</span>
+          <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#edf5ee] border border-[#d8e6db] text-[11px] font-mono font-semibold text-[#0d5934]">
+            <Terminal className="w-3.5 h-3.5 text-[#059669]" />
+            <span>LOCAL ENGINE • 0 CLOUD CALLS</span>
           </div>
 
           {/* Demo Mode Toggle */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/90 border border-slate-800 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span className="text-xs font-mono font-medium text-slate-300">DEMO MODE</span>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-[#d8e6db] shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#059669]" />
+            <span className="text-xs font-mono font-bold text-[#092218]">DEMO MODE</span>
             <button
               type="button"
               role="switch"
               aria-checked={demoMode}
               onClick={() => setDemoMode(!demoMode)}
               className={`relative inline-flex h-5 w-9 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                demoMode ? 'bg-emerald-500' : 'bg-slate-700'
+                demoMode ? 'bg-[#059669]' : 'bg-[#c4ded0]'
               }`}
             >
               <span
@@ -113,6 +117,17 @@ export function Header({
               />
             </button>
           </div>
+
+          {/* User Sign Out Button */}
+          {onLogout && (
+            <button
+              onClick={onLogout}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold text-[#526d60] hover:text-[#092218] bg-[#edf5ee] hover:bg-[#dceade] border border-[#d8e6db] transition-all cursor-pointer"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Sign Out</span>
+            </button>
+          )}
         </div>
       </div>
     </header>

@@ -25,39 +25,32 @@ export function KpiCard({
       case 'healthy':
       case 'safe':
         return {
-          border: 'border-emerald-500/20 hover:border-emerald-500/40',
-          accent: 'text-emerald-400',
-          bgAccent: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-          glow: 'group-hover:shadow-[0_0_20px_rgba(0,245,155,0.08)]'
+          border: 'border-[#e2ede5] hover:border-[#b8e8c6]',
+          accent: 'text-[#092218]',
+          bgAccent: 'bg-[#d7f2df] text-[#0d5934] border-[#b9e5c5]',
+          glow: 'hover:shadow-[0_8px_25px_-4px_rgba(9,34,24,0.06)]'
         };
       case 'danger':
       case 'incident':
         return {
-          border: 'border-rose-500/20 hover:border-rose-500/40',
-          accent: 'text-rose-400',
-          bgAccent: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
-          glow: 'group-hover:shadow-[0_0_20px_rgba(255,51,75,0.08)]'
+          border: 'border-[#fecaca] hover:border-[#fca5a5]',
+          accent: 'text-[#dc2626]',
+          bgAccent: 'bg-[#fef2f2] text-[#dc2626] border-[#fecaca]',
+          glow: 'hover:shadow-[0_8px_25px_-4px_rgba(220,38,38,0.08)]'
         };
       case 'warning':
         return {
-          border: 'border-amber-500/20 hover:border-amber-500/40',
-          accent: 'text-amber-400',
-          bgAccent: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-          glow: 'group-hover:shadow-[0_0_20px_rgba(245,158,11,0.08)]'
-        };
-      case 'cyan':
-        return {
-          border: 'border-cyan-500/20 hover:border-cyan-500/40',
-          accent: 'text-cyan-400',
-          bgAccent: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
-          glow: 'group-hover:shadow-[0_0_20px_rgba(0,229,255,0.08)]'
+          border: 'border-[#fde68a] hover:border-[#fcd34d]',
+          accent: 'text-[#d97706]',
+          bgAccent: 'bg-[#fffbeb] text-[#d97706] border-[#fde68a]',
+          glow: 'hover:shadow-[0_8px_25px_-4px_rgba(217,119,6,0.08)]'
         };
       default:
         return {
-          border: 'border-slate-800 hover:border-slate-700',
-          accent: 'text-slate-300',
-          bgAccent: 'bg-slate-800 text-slate-300 border-slate-700',
-          glow: 'group-hover:shadow-[0_0_20px_rgba(255,255,255,0.03)]'
+          border: 'border-[#e2ede5] hover:border-[#cbd5e1]',
+          accent: 'text-[#092218]',
+          bgAccent: 'bg-[#edf5ee] text-[#092218] border-[#d8e6db]',
+          glow: 'hover:shadow-[0_8px_25px_-4px_rgba(9,34,24,0.04)]'
         };
     }
   };
@@ -66,40 +59,40 @@ export function KpiCard({
 
   return (
     <div
-      className={`group relative bg-[#0d1424] rounded-xl p-4 sm:p-5 border transition-all duration-300 ${style.border} ${style.glow}`}
+      className={`group relative bg-white rounded-2xl p-4 sm:p-5 border transition-all duration-300 ${style.border} ${style.glow} shadow-[0_4px_16px_-2px_rgba(9,34,24,0.02)]`}
     >
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-mono uppercase tracking-wider text-slate-400 font-medium">
+        <span className="text-xs font-mono uppercase tracking-wider text-[#526d60] font-semibold">
           {title}
         </span>
         {Icon && (
-          <div className={`p-2 rounded-lg border ${style.bgAccent} transition-transform duration-200 group-hover:scale-105`}>
+          <div className={`p-2 rounded-xl border ${style.bgAccent} transition-transform duration-200 group-hover:scale-105 shadow-xs`}>
             <Icon className="w-4 h-4" />
           </div>
         )}
       </div>
 
       <div className="flex items-baseline gap-1.5 mb-1.5">
-        <span className={`text-2xl sm:text-3xl font-bold font-mono tracking-tight ${style.accent}`}>
+        <span className={`text-2xl sm:text-3xl font-extrabold font-mono tracking-tight ${style.accent}`}>
           {value}
         </span>
         {unit && (
-          <span className="text-xs sm:text-sm font-mono text-slate-400 font-normal">
+          <span className="text-xs sm:text-sm font-mono text-[#526d60] font-medium">
             {unit}
           </span>
         )}
       </div>
 
-      <div className="flex items-center justify-between text-xs text-slate-400 mt-2">
-        <span className="truncate pr-2 font-sans">{subtitle}</span>
+      <div className="flex items-center justify-between text-xs text-[#526d60] mt-2">
+        <span className="truncate pr-2 font-sans font-medium">{subtitle}</span>
         {trend && (
           <span
-            className={`font-mono text-[11px] font-semibold flex items-center gap-0.5 flex-shrink-0 ${
+            className={`font-mono text-[11px] font-bold flex items-center gap-0.5 flex-shrink-0 ${
               trendDirection === 'up'
-                ? 'text-emerald-400'
+                ? 'text-[#059669]'
                 : trendDirection === 'down'
-                ? 'text-rose-400'
-                : 'text-slate-400'
+                ? 'text-[#dc2626]'
+                : 'text-[#526d60]'
             }`}
           >
             {trendDirection === 'up' && <TrendingUp className="w-3 h-3" />}

@@ -37,8 +37,8 @@ export function TrustScore({ score = 91, maxScore = 100, isDangerous = false }) 
   const percentage = Math.min(100, Math.max(0, displayScore));
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
-  const strokeColor = isDangerous ? '#ff334b' : '#00f59b';
-  const glowColor = isDangerous ? 'rgba(255, 51, 75, 0.4)' : 'rgba(0, 245, 155, 0.4)';
+  const strokeColor = isDangerous ? '#dc2626' : '#059669';
+  const glowColor = isDangerous ? 'rgba(220, 38, 38, 0.2)' : 'rgba(5, 150, 105, 0.2)';
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
@@ -56,7 +56,7 @@ export function TrustScore({ score = 91, maxScore = 100, isDangerous = false }) 
             cy={center}
             r={radius}
             fill="transparent"
-            stroke="#131b2e"
+            stroke="#e2ede5"
             strokeWidth={strokeWidth}
           />
           {/* Active Animated Ring */}
@@ -72,25 +72,25 @@ export function TrustScore({ score = 91, maxScore = 100, isDangerous = false }) 
             strokeLinecap="round"
             className="transition-all duration-700 ease-out"
             style={{
-              filter: `drop-shadow(0 0 8px ${glowColor})`,
+              filter: `drop-shadow(0 0 6px ${glowColor})`,
             }}
           />
         </svg>
 
         {/* Center Numeric Score */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-semibold mb-0.5">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-[#527060] font-semibold mb-0.5">
             TRUST SCORE
           </span>
           <div className="flex items-baseline justify-center">
             <span
               className="text-4xl sm:text-5xl font-extrabold font-mono tracking-tight transition-colors duration-300"
-              style={{ color: strokeColor }}
+              style={{ color: isDangerous ? '#dc2626' : '#092218' }}
             >
               {displayScore}
             </span>
           </div>
-          <span className="text-xs font-mono text-slate-400 font-medium">
+          <span className="text-xs font-mono text-[#71877b] font-medium">
             / {maxScore}
           </span>
         </div>

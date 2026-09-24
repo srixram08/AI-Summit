@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { LandingPage } from './pages/LandingPage';
+import { LoginPage } from './pages/LoginPage';
 import { Sidebar } from './components/layout/Sidebar';
 import { Header } from './components/layout/Header';
 import { Dashboard } from './pages/Dashboard';
@@ -7,6 +9,19 @@ import { Assurance } from './pages/Assurance';
 import { useVectorAssurance } from './hooks/useVectorAssurance';
 
 export function App() {
+  // Page Routing State: 'landing' | 'login' | 'dashboard'
+  const [page, setPage] = useState('landing');
+  
+  // Authenticated user state
+  const [user, setUser] = useState({
+    name: 'Alex Chen',
+    role: 'Staff SRE • Platform Assurance',
+    email: 'alex.chen@inventra.io',
+    cluster: 'prod-us-east-k8s',
+    avatarInitials: 'AC'
+  });
+
+  // Active console tab: 'dashboard' | 'digital-twin' | 'assurance'
   const [currentTab, setCurrentTab] = useState('dashboard');
 
   const {
@@ -32,33 +47,66 @@ export function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleNavigateToTwin = (scenarioKey = 'safe') => {
-    selectScenario(scenarioKey);
-    setCurrentTab('digital-twin');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   const handleBackToDashboard = () => {
     setCurrentTab('dashboard');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  return (
-    <div className="min-h-screen bg-[#080c14] text-slate-100 flex flex-col md:flex-row antialiased selection:bg-emerald-500/20 selection:text-emerald-300">
-      {/* Persistent Left Sidebar (Desktop) */}
-      <div className="hidden md:block">
-        <Sidebar
-          currentTab={currentTab}
-          onSelectTab={(tab) => {
-            setCurrentTab(tab);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        />
-      </div>
+  const handleLogout = () => {
+    setPage('landing');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-      {/* Main App Container */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[#080c14]">
-        {/* Top Header */}
+  // 1. Landing Page View
+  if (page === 'landing') {
+    return (
+      <LandingPage
+        onNavigateToLogin={() => {
+          setPage('login');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onLaunchDemo={() => {
+          setPage('dashboard');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
+    );
+  }
+
+  // 2. Login Page View
+  if (page === 'login') {
+    return (
+      <LoginPage
+        onBackToLanding={() => {
+          setPage('landing');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        onLoginSuccess={(loggedInUser) => {
+          setUser(loggedInUser);
+          setPage('dashboard');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
+    );
+  }
+
+  // 3. User Dashboard Console View
+  return (
+    <div className="min-h-screen bg-[#edf5ee] text-[#092218] antialiased selection:bg-[#092218] selection:text-white flex font-sans page-transition-3d">
+      {/* Fixed/Sticky Left Dark Forest Sidebar */}
+      <Sidebar
+        currentTab={currentTab}
+        onSelectTab={(tab) => {
+          setCurrentTab(tab);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        user={user}
+        onLogout={handleLogout}
+      />
+
+      {/* Main Content Viewport */}
+      <div className="flex-1 flex flex-col min-w-0 bg-[#edf5ee] min-h-screen">
+        {/* Top Console Header */}
         <Header
           currentTab={currentTab}
           onSelectTab={(tab) => {
@@ -68,9 +116,11 @@ export function App() {
           demoMode={demoMode}
           setDemoMode={setDemoMode}
           lastSyncTime={lastSyncTime}
+          user={user}
+          onLogout={handleLogout}
         />
 
-        {/* Dynamic Page Views */}
+        {/* Dynamic Inner Page Content */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
           {currentTab === 'dashboard' && (
             <Dashboard
@@ -104,15 +154,25 @@ export function App() {
           )}
         </main>
 
-        {/* Subtle Footer */}
-        <footer className="border-t border-slate-900 px-6 py-4 text-center text-xs font-mono text-slate-400">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 max-w-7xl mx-auto">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Vector Pre-Execution Decision Assurance Layer</span>
+        {/* Console Bottom Bar */}
+        <footer className="border-t border-[#d8e6db] bg-white px-6 py-4 text-xs font-mono text-[#526d60]">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5">
+              <div className="w-5 h-5 rounded-md bg-black p-0.5 border border-[#2b654c] flex items-center justify-center flex-shrink-0">
+                <img src="/vector-logo.png" alt="Vector" className="w-full h-full object-contain" />
+              </div>
+              <span className="font-bold text-[#092218]">Vector Decision Assurance Layer</span>
+              <span className="text-[#86a394]">• Logged in as {user.name} ({user.role})</span>
             </div>
-            <div>
-              <span>Deterministic Synthetic Engine • 0 External Cloud Calls • Local Hackathon MVP</span>
+            <div className="flex items-center gap-4 text-[11px] text-[#86a394]">
+              <span>Context: {user.cluster}</span>
+              <span>•</span>
+              <button
+                onClick={handleLogout}
+                className="text-[#059669] hover:underline cursor-pointer font-bold"
+              >
+                Sign Out to Homepage
+              </button>
             </div>
           </div>
         </footer>

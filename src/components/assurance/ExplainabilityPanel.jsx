@@ -5,15 +5,15 @@ export function ExplainabilityPanel({ scenarioResult }) {
   const isDangerous = scenarioResult.key === 'dangerous';
 
   return (
-    <div className="bg-[#0a0f1d] rounded-xl border border-slate-800/80 p-5">
-      <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-800/80">
+    <div className="bg-white rounded-2xl border border-[#e2ede5] p-5 shadow-sm">
+      <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#e2ede5]">
         <div className="flex items-center gap-2">
-          <HelpCircle className="w-4 h-4 text-cyan-400" />
-          <h4 className="text-xs font-mono uppercase tracking-wider font-bold text-white">
+          <HelpCircle className="w-4 h-4 text-[#059669]" />
+          <h4 className="text-xs font-mono uppercase tracking-wider font-bold text-[#092218]">
             WHY DID VECTOR DECIDE THIS?
           </h4>
         </div>
-        <span className="text-[10px] font-mono text-slate-400">
+        <span className="text-[10px] font-mono text-[#71877b]">
           Deterministic Rule Trace
         </span>
       </div>
@@ -21,29 +21,29 @@ export function ExplainabilityPanel({ scenarioResult }) {
       <div className="space-y-3">
         {scenarioResult.reasons.map((reason) => {
           let Icon = CheckCircle2;
-          let colorStyle = 'text-emerald-400 border-emerald-500/20 bg-emerald-950/20';
+          let colorStyle = 'text-[#0d5934] border-[#b6e3c5] bg-[#f2faf5]';
 
           if (reason.status === 'violation') {
             Icon = XCircle;
-            colorStyle = 'text-rose-400 border-rose-500/30 bg-rose-950/30';
+            colorStyle = 'text-[#dc2626] border-[#fecaca] bg-[#fef2f2]';
           } else if (reason.status === 'warning') {
             Icon = AlertTriangle;
-            colorStyle = 'text-amber-400 border-amber-500/20 bg-amber-950/20';
+            colorStyle = 'text-[#b45309] border-[#fde68a] bg-[#fffbeb]';
           }
 
           return (
             <div
               key={reason.id}
-              className={`p-3 rounded-lg border flex items-start gap-3 transition-colors ${colorStyle}`}
+              className={`p-3 rounded-xl border flex items-start gap-3 transition-colors ${colorStyle}`}
             >
               <Icon className="w-4 h-4 mt-0.5 flex-shrink-0" />
               <div className="text-xs">
                 {reason.title && (
-                  <span className="font-mono font-semibold block text-slate-200 mb-0.5">
+                  <span className="font-mono font-bold block text-[#092218] mb-0.5">
                     {reason.title}:
                   </span>
                 )}
-                <span className="text-slate-300 font-sans leading-relaxed">
+                <span className="text-[#334e40] font-sans leading-relaxed">
                   {reason.text}
                 </span>
               </div>
@@ -53,28 +53,28 @@ export function ExplainabilityPanel({ scenarioResult }) {
       </div>
 
       {/* Downstream Impact Prediction Summary */}
-      <div className="mt-4 pt-3 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono">
-        <div className="p-2 rounded bg-slate-900/60 border border-slate-800">
-          <span className="text-slate-400 block text-[10px]">CPU IMPACT</span>
-          <span className={isDangerous ? 'text-amber-400' : 'text-emerald-400'}>
+      <div className="mt-4 pt-3 border-t border-[#e2ede5] grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono">
+        <div className="p-2.5 rounded-lg bg-[#f8fbf9] border border-[#e2ede5]">
+          <span className="text-[#71877b] block text-[10px]">CPU IMPACT</span>
+          <span className={isDangerous ? 'text-[#b45309] font-bold' : 'text-[#0d5934] font-bold'}>
             {scenarioResult.telemetryImpact.cpuAfter}
           </span>
         </div>
-        <div className="p-2 rounded bg-slate-900/60 border border-slate-800">
-          <span className="text-slate-400 block text-[10px]">LATENCY</span>
-          <span className={isDangerous ? 'text-rose-400 font-bold' : 'text-emerald-400'}>
+        <div className="p-2.5 rounded-lg bg-[#f8fbf9] border border-[#e2ede5]">
+          <span className="text-[#71877b] block text-[10px]">LATENCY</span>
+          <span className={isDangerous ? 'text-[#dc2626] font-bold' : 'text-[#0d5934] font-bold'}>
             {scenarioResult.telemetryImpact.latencyAfter}
           </span>
         </div>
-        <div className="p-2 rounded bg-slate-900/60 border border-slate-800">
-          <span className="text-slate-400 block text-[10px]">DB POOL</span>
-          <span className={isDangerous ? 'text-rose-400 font-bold' : 'text-emerald-400'}>
+        <div className="p-2.5 rounded-lg bg-[#f8fbf9] border border-[#e2ede5]">
+          <span className="text-[#71877b] block text-[10px]">DB POOL</span>
+          <span className={isDangerous ? 'text-[#dc2626] font-bold' : 'text-[#0d5934] font-bold'}>
             {scenarioResult.telemetryImpact.dbPool}
           </span>
         </div>
-        <div className="p-2 rounded bg-slate-900/60 border border-slate-800">
-          <span className="text-slate-400 block text-[10px]">COST DELTA</span>
-          <span className="text-slate-300">
+        <div className="p-2.5 rounded-lg bg-[#f8fbf9] border border-[#e2ede5]">
+          <span className="text-[#71877b] block text-[10px]">COST DELTA</span>
+          <span className="text-[#092218] font-semibold">
             {scenarioResult.telemetryImpact.costDelta}
           </span>
         </div>

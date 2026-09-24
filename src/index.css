@@ -1,62 +1,163 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
   }
   body {
-    background-color: #080c14;
-    color: #e2e8f0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #edf5ee;
+    color: #092218;
+    font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   }
   code, pre, .font-mono {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Roboto Mono', monospace;
   }
 }
 
-/* Custom modern scrollbar */
+/* Custom Keyvo modern scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #080c14;
+  background: #edf5ee;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 3px;
+  background: #c3d9cb;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #9ebbaf;
 }
 
-/* Sublte radar grid backdrop */
-.grid-bg {
+/* 3D Perspective Containers */
+.perspective-800 {
+  perspective: 800px;
+}
+.perspective-1000 {
+  perspective: 1000px;
+}
+.perspective-1400 {
+  perspective: 1400px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* 3D Card Hover Tilt Effects */
+.card-3d {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+}
+.card-3d:hover {
+  transform: perspective(1000px) translateY(-8px) rotateX(3deg) rotateY(-2deg) scale(1.01);
+  box-shadow: 0 20px 40px -10px rgba(9, 34, 24, 0.12), 0 0 20px rgba(5, 150, 105, 0.08);
+}
+
+/* 3D Floating Logo Animation */
+.logo-3d {
+  transform-style: preserve-3d;
+  animation: logoFloat3d 6s ease-in-out infinite alternate;
+  filter: drop-shadow(0 10px 20px rgba(9, 34, 24, 0.3));
+}
+@keyframes logoFloat3d {
+  0% { transform: perspective(800px) translateY(0px) rotateY(-8deg) rotateX(4deg); }
+  50% { transform: perspective(800px) translateY(-8px) rotateY(0deg) rotateX(0deg); }
+  100% { transform: perspective(800px) translateY(0px) rotateY(8deg) rotateX(-4deg); }
+}
+
+/* 3D Login Page Card Entrance */
+.login-card-3d {
+  transform-style: preserve-3d;
+  animation: login3dEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes login3dEntrance {
+  0% {
+    opacity: 0;
+    transform: perspective(1200px) rotateX(-12deg) translateY(40px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1200px) rotateX(0deg) translateY(0px) scale(1);
+  }
+}
+
+/* 3D Hero Console Perspective */
+.hero-console-3d {
+  transform: perspective(1400px) rotateX(2.5deg) translateY(0);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+  transform-style: preserve-3d;
+}
+.hero-console-3d:hover {
+  transform: perspective(1400px) rotateX(0deg) translateY(-6px);
+  box-shadow: 0 35px 70px -15px rgba(9, 34, 24, 0.16), 0 0 30px rgba(5, 150, 105, 0.1);
+}
+
+/* 3D Pulse Radar Ring */
+.radar-pulse-3d {
+  position: absolute;
+  inset: -12px;
+  border-radius: 9999px;
+  border: 2px solid rgba(52, 211, 153, 0.4);
+  animation: radarPulse 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+@keyframes radarPulse {
+  0% { transform: scale(0.85); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* 3D Page View Transition */
+.page-transition-3d {
+  animation: page3dIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes page3dIn {
+  0% {
+    opacity: 0;
+    transform: perspective(1200px) translateY(20px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1200px) translateY(0px) scale(1);
+  }
+}
+
+/* Keyvo card elevation and borders */
+.keyvo-card {
+  background: #ffffff;
+  border: 1px solid #e2ede5;
+  box-shadow: 0 4px 20px -2px rgba(9, 34, 24, 0.04);
+}
+
+.keyvo-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.keyvo-card-hover:hover {
+  border-color: #c4ded0;
+  box-shadow: 0 12px 36px -4px rgba(9, 34, 24, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Keyvo pill badge */
+.keyvo-pill {
+  background-color: #d7f2df;
+  color: #0d5934;
+  border: 1px solid #b9e5c5;
+}
+
+/* Keyvo highlighted row */
+.keyvo-highlight-row {
+  background-color: #e6f7ec;
+  border: 1px solid #b8e8c6;
+}
+
+/* Subtle background grid pattern */
+.keyvo-grid-bg {
   background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(9, 34, 24, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(9, 34, 24, 0.035) 1px, transparent 1px);
 }
 
-/* Glass panel */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-panel-hover:hover {
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(17, 27, 49, 0.85);
-}
-
-/* Glowing text effects */
-.glow-text-green {
-  text-shadow: 0 0 12px rgba(0, 245, 155, 0.4);
-}
-.glow-text-red {
-  text-shadow: 0 0 12px rgba(255, 51, 75, 0.4);
-}

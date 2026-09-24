@@ -79,26 +79,26 @@ export function AssuranceMatrix({ scenarioResult }) {
   ];
 
   return (
-    <div className="bg-[#0d1424] rounded-xl border border-slate-800/80 p-5 sm:p-6 shadow-sm">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-4 border-b border-slate-800/80">
+    <div className="bg-white rounded-2xl border border-[#e2ede5] p-5 sm:p-6 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-4 border-b border-[#e2ede5]">
         <div>
           <div className="flex items-center gap-2">
-            <Sliders className="w-4 h-4 text-cyan-400" />
-            <h3 className="text-sm font-mono uppercase tracking-wider font-bold text-white">
+            <Sliders className="w-4 h-4 text-[#059669]" />
+            <h3 className="text-sm font-mono uppercase tracking-wider font-bold text-[#092218]">
               Pre-Execution Assurance Matrix
             </h3>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+            <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-[#d7f2df] text-[#0d5934] font-semibold border border-[#b6e3c5]">
               5 Guardrail Vectors
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#527060] mt-1">
             Simultaneous multi-dimensional safety, policy, and rollback verification prior to applying manifests.
           </p>
         </div>
 
         <div className="flex items-center gap-2 text-xs font-mono">
-          <span className="text-slate-400">Target Change:</span>
-          <span className="text-white font-bold">{scenarioResult.actionSummary}</span>
+          <span className="text-[#527060]">Target Change:</span>
+          <span className="text-[#092218] font-bold">{scenarioResult.actionSummary}</span>
         </div>
       </div>
 
@@ -114,10 +114,10 @@ export function AssuranceMatrix({ scenarioResult }) {
               key={check.id}
               className={`rounded-xl p-4 border transition-all duration-200 flex flex-col justify-between ${
                 isCheckViolation
-                  ? 'bg-rose-950/20 border-rose-500/50 shadow-[0_0_15px_rgba(255,51,75,0.08)]'
+                  ? 'bg-[#fef2f2] border-[#fecaca] shadow-sm'
                   : isCheckSafe
-                  ? 'bg-[#0a0f1d] border-emerald-500/20 hover:border-emerald-500/40'
-                  : 'bg-[#0a0f1d] border-amber-500/20'
+                  ? 'bg-[#f8fbf9] border-[#e2ede5] hover:border-[#b6e3c5] hover:bg-[#f2faf5]'
+                  : 'bg-[#fffbeb] border-[#fde68a]'
               }`}
             >
               <div>
@@ -125,14 +125,14 @@ export function AssuranceMatrix({ scenarioResult }) {
                   <div className="flex items-center gap-2">
                     <div className={`p-1.5 rounded-md border ${
                       isCheckViolation
-                        ? 'bg-rose-950/60 border-rose-500/40 text-rose-400'
+                        ? 'bg-[#fee2e2] border-[#fca5a5] text-[#dc2626]'
                         : isCheckSafe
-                        ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-400'
-                        : 'bg-amber-950/60 border-amber-500/40 text-amber-400'
+                        ? 'bg-[#d7f2df] border-[#b6e3c5] text-[#0d5934]'
+                        : 'bg-[#fef3c7] border-[#fde68a] text-[#b45309]'
                     }`}>
                       <Icon className="w-3.5 h-3.5" />
                     </div>
-                    <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-300">
+                    <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-[#092218]">
                       {check.name}
                     </span>
                   </div>
@@ -144,28 +144,30 @@ export function AssuranceMatrix({ scenarioResult }) {
 
                 <div className="my-2">
                   <div className={`text-xl font-bold font-mono tracking-tight ${
-                    isCheckViolation ? 'text-rose-400' : isCheckSafe ? 'text-emerald-400' : 'text-amber-400'
+                    isCheckViolation ? 'text-[#dc2626]' : isCheckSafe ? 'text-[#0d5934]' : 'text-[#b45309]'
                   }`}>
                     {check.value}
                   </div>
                 </div>
 
                 {check.metricBar !== undefined && (
-                  <div className="w-full bg-slate-800 rounded-full h-1.5 my-2 overflow-hidden">
+                  <div className="w-full bg-[#e2ede5] rounded-full h-1.5 my-2 overflow-hidden">
                     <div
-                      className={`h-full rounded-full transition-all duration-500 ${check.metricColor}`}
+                      className={`h-full rounded-full transition-all duration-500 ${
+                        isCheckViolation ? 'bg-[#dc2626]' : 'bg-[#059669]'
+                      }`}
                       style={{ width: `${check.metricBar}%` }}
                     />
                   </div>
                 )}
 
-                <p className="text-xs text-slate-400 mt-2 font-sans leading-relaxed">
+                <p className="text-xs text-[#527060] mt-2 font-sans leading-relaxed">
                   {check.description}
                 </p>
               </div>
 
               {(check.policyRule || check.twinDetails || check.rto) && (
-                <div className="mt-3 pt-2.5 border-t border-slate-800/80 text-[10px] font-mono text-slate-500">
+                <div className="mt-3 pt-2.5 border-t border-[#e2ede5] text-[10px] font-mono text-[#71877b]">
                   {check.policyRule && <span>Rule: {check.policyRule}</span>}
                   {check.twinDetails && <span className="line-clamp-1">{check.twinDetails}</span>}
                   {check.rto && <span>SLA: {check.rto}</span>}
