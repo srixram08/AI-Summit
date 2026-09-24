@@ -6,11 +6,16 @@ import {
   HardDrive,
   Clock,
   Server,
-  Sparkles
+  Sparkles,
+  Zap,
+  TrendingUp,
+  Award,
+  AlertTriangle
 } from 'lucide-react';
 import { KpiCard } from '../components/dashboard/KpiCard';
 import { TelemetryChart } from '../components/dashboard/TelemetryChart';
 import { RecommendationCard } from '../components/dashboard/RecommendationCard';
+import { ENTERPRISE_ROI_DATA } from '../data/governanceData';
 
 export function Dashboard({ 
   clusterHealth, 
@@ -71,6 +76,36 @@ export function Dashboard({
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
+      </div>
+
+      {/* Enterprise Operational Impact Summary Bar */}
+      <div className="bg-[#092218] text-white rounded-2xl p-4 sm:p-5 border border-[#163e2e] flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-[#163e2e] text-[#34d399] flex items-center justify-center flex-shrink-0">
+            <Award className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono font-bold text-[#34d399] uppercase">
+                Vector Operational Impact (Simulated)
+              </span>
+              <span className="text-[10px] font-mono px-2 py-0.2 rounded-full bg-[#163e2e] text-[#a7f3d0]">
+                Demo Metrics
+              </span>
+            </div>
+            <p className="text-xs text-[#86a394] mt-0.5 font-mono">
+              Potential Downtime Avoided: <strong className="text-white">18 min</strong> • Risky Actions Blocked: <strong className="text-[#fca5a5]">7</strong> • Estimated Cost Avoided: <strong className="text-[#34d399]">{ENTERPRISE_ROI_DATA.costAvoidedFormatted}</strong>
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => onNavigateToAssurance('dangerous')}
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#163e2e] hover:bg-[#205740] border border-[#2b654c] text-white font-mono font-bold text-xs transition-all cursor-pointer flex-shrink-0"
+        >
+          <span>Inspect Blocked Scenario</span>
+          <ArrowRight className="w-3.5 h-3.5 text-[#34d399]" />
+        </button>
       </div>
 
       {/* KPI Cards Row */}

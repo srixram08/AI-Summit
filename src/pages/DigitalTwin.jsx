@@ -8,14 +8,15 @@ import {
   ArrowRight, 
   Zap, 
   ShieldCheck, 
-  Activity,
-  AlertTriangle,
-  RefreshCw,
-  SlidersHorizontal
+  Activity, 
+  AlertTriangle, 
+  RefreshCw, 
+  SlidersHorizontal 
 } from 'lucide-react';
 import { ArchitectureTopology } from '../components/assurance/ArchitectureTopology';
 import { StatusDot } from '../components/common/StatusDot';
 import { Badge } from '../components/common/Badge';
+import { WhatIfComparison } from '../components/common/WhatIfComparison';
 
 export function DigitalTwin({
   assuranceResult,
@@ -60,6 +61,9 @@ export function DigitalTwin({
       {/* Main Connected Architecture Topology */}
       <ArchitectureTopology scenarioResult={assuranceResult} />
 
+      {/* What-If Side-by-Side Comparison */}
+      <WhatIfComparison scenarioKey={currentScenario} onNavigateToAssurance={onNavigateToAssurance} />
+
       {/* Simulation Controls & Side-by-Side Comparison */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Simulation Parameter Inspector */}
@@ -103,48 +107,48 @@ export function DigitalTwin({
               onClick={() => onSelectScenario('dangerous')}
               className={`w-full p-4 rounded-xl border-2 text-left transition-all flex items-center justify-between cursor-pointer ${
                 isDangerous
-                  ? 'bg-[#fff1f2] border-[#fecdd3] shadow-xs'
+                  ? 'bg-[#fef2f2] border-[#fca5a5] shadow-xs'
                   : 'bg-[#f8fbf9] border-[#e2ede5] hover:border-[#cbdfd1]'
               }`}
             >
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono font-bold text-[#dc2626] uppercase">Scenario B</span>
-                  <Badge variant="danger" size="sm">DANGEROUS</Badge>
+                  <span className="text-xs font-mono font-bold text-[#092218] uppercase">Scenario B</span>
+                  <Badge variant="dangerous" size="sm">DANGEROUS</Badge>
                 </div>
                 <div className="text-sm font-bold text-[#092218] mt-1 font-sans">Scale API 3 → 20 replicas</div>
-                <p className="text-xs text-[#526d60] mt-0.5">Surges API; causes 210% DB pool exhaustion.</p>
+                <p className="text-xs text-[#526d60] mt-0.5">DB connection pool exhausted (210%). Policy limit exceeded.</p>
               </div>
               <div className="text-right font-mono">
-                <span className="text-xs text-[#dc2626] font-extrabold block">Score: 58</span>
+                <span className="text-xs text-[#dc2626] font-extrabold block">Score: 38</span>
                 <span className="text-[10px] text-[#dc2626] font-semibold">BLOCKED</span>
               </div>
             </button>
           </div>
         </div>
 
-        {/* Live Comparison Metrics */}
+        {/* Live Side-by-Side Simulation Delta */}
         <div className="bg-white rounded-2xl border border-[#e2ede5] p-5 sm:p-6 shadow-[0_4px_16px_-2px_rgba(9,34,24,0.02)]">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#edf3ee]">
             <div className="flex items-center gap-2">
               <Activity className="w-4 h-4 text-[#059669]" />
               <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#092218]">
-                Live Production vs Twin Projected
+                Predicted 15-Min Telemetry Delta
               </h3>
             </div>
-            <span className="text-[10px] font-mono text-[#0d5934] font-semibold">
-              Deterministic Twin Engine
+            <span className="text-[10px] font-mono text-[#0d5934] bg-[#d7f2df] px-2 py-0.5 rounded-full border border-[#b9e5c5] font-semibold">
+              SYNTHETIC MODEL
             </span>
           </div>
 
           <div className="space-y-3 font-mono text-xs">
             <div className="p-3.5 rounded-xl bg-[#f8fbf9] border border-[#e2ede5] flex items-center justify-between">
-              <span className="text-[#526d60]">API Pods</span>
+              <span className="text-[#526d60]">Active Replicas</span>
               <div className="flex items-center gap-3">
                 <span className="text-[#698a78]">Prod: 3</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#059669]" />
                 <span className={`font-bold ${isDangerous ? 'text-[#dc2626]' : 'text-[#059669]'}`}>
-                  Twin: {assuranceResult.proposedReplicas}
+                  Twin: {isDangerous ? '20' : '6'}
                 </span>
               </div>
             </div>

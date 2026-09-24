@@ -12,6 +12,8 @@ import { ArchitectureTopology } from '../components/assurance/ArchitectureTopolo
 import { ScenarioSelector } from '../components/assurance/ScenarioSelector';
 import { AssuranceMatrix } from '../components/assurance/AssuranceMatrix';
 import { DecisionPanel } from '../components/assurance/DecisionPanel';
+import { StructuredEvidenceCard } from '../components/assurance/StructuredEvidenceCard';
+import { WhatIfComparison } from '../components/common/WhatIfComparison';
 
 export function Assurance({
   currentScenario,
@@ -60,6 +62,16 @@ export function Assurance({
           currentScenario={currentScenario}
           onSelectScenario={onSelectScenario}
         />
+      </section>
+
+      {/* Structured AI Recommendation Explainability Evidence */}
+      <section aria-label="Structured Evidence & Justification">
+        <StructuredEvidenceCard scenarioResult={assuranceResult} />
+      </section>
+
+      {/* What-If Comparison Metric Table */}
+      <section aria-label="What-If Comparison Matrix">
+        <WhatIfComparison scenarioKey={currentScenario} />
       </section>
 
       {/* Assurance Matrix (5 Guardrail Checks) */}

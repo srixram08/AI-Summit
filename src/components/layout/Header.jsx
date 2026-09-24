@@ -5,11 +5,16 @@ import {
   ShieldCheck, 
   Layers, 
   LayoutDashboard,
-  CheckCircle2,
-  RefreshCw,
-  Terminal,
-  LogOut,
-  User
+  CheckCircle2, 
+  RefreshCw, 
+  Terminal, 
+  LogOut, 
+  User,
+  Zap,
+  Sliders,
+  RotateCcw,
+  FileText,
+  TrendingUp
 } from 'lucide-react';
 import { StatusDot } from '../common/StatusDot';
 
@@ -27,13 +32,33 @@ export function Header({
       title: 'Command Center',
       subtitle: 'Real-time infrastructure health and AI recommendation monitoring'
     },
-    'digital-twin': {
-      title: 'Digital Twin Topology',
-      subtitle: 'Simulate AI actions across microservice tiers before applying changes'
+    chaos: {
+      title: 'Chaos & Fault Injection Lab',
+      subtitle: 'Simulate live synthetic cluster disruptions and test autonomous interception'
     },
     assurance: {
       title: 'Digital Twin & Decision Assurance',
-      subtitle: 'Simulate AI actions before they touch production.'
+      subtitle: 'Simulate AI actions and evaluate safety gates before they touch production'
+    },
+    'digital-twin': {
+      title: 'Digital Twin Topology & What-If',
+      subtitle: 'Simulate AI actions across microservice tiers before applying changes'
+    },
+    policies: {
+      title: 'Enterprise Governance Console',
+      subtitle: 'Active cluster policy catalog and interactive violation simulator'
+    },
+    rollback: {
+      title: 'Automated Rollback Planner',
+      subtitle: 'Verified sub-2-second recovery manifests and standby execution drills'
+    },
+    forensics: {
+      title: 'Incident Forensics Ledger',
+      subtitle: 'Cryptographically signed audit receipts and immutable event logs'
+    },
+    roi: {
+      title: 'Enterprise Business Value & ROI',
+      subtitle: 'Operational impact, prevented downtime minutes, and SRE financial savings'
     }
   };
 
@@ -63,34 +88,6 @@ export function Header({
 
         {/* Right: Controls & Demo Mode */}
         <div className="flex items-center gap-3 self-end md:self-auto">
-          {/* Mobile Tab Switcher */}
-          <div className="flex md:hidden bg-[#edf5ee] border border-[#d8e6db] rounded-xl p-1 text-xs">
-            <button
-              onClick={() => onSelectTab('dashboard')}
-              className={`px-2.5 py-1 rounded-lg font-semibold transition-all ${
-                currentTab === 'dashboard' ? 'bg-[#092218] text-white shadow-xs' : 'text-[#526d60]'
-              }`}
-            >
-              Dash
-            </button>
-            <button
-              onClick={() => onSelectTab('digital-twin')}
-              className={`px-2.5 py-1 rounded-lg font-semibold transition-all ${
-                currentTab === 'digital-twin' ? 'bg-[#092218] text-white shadow-xs' : 'text-[#526d60]'
-              }`}
-            >
-              Twin
-            </button>
-            <button
-              onClick={() => onSelectTab('assurance')}
-              className={`px-2.5 py-1 rounded-lg font-semibold transition-all ${
-                currentTab === 'assurance' ? 'bg-[#092218] text-white shadow-xs' : 'text-[#526d60]'
-              }`}
-            >
-              Assurance
-            </button>
-          </div>
-
           {/* Local Simulation Badge */}
           <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#edf5ee] border border-[#d8e6db] text-[11px] font-mono font-semibold text-[#0d5934]">
             <Terminal className="w-3.5 h-3.5 text-[#059669]" />

@@ -6,6 +6,11 @@ import { Header } from './components/layout/Header';
 import { Dashboard } from './pages/Dashboard';
 import { DigitalTwin } from './pages/DigitalTwin';
 import { Assurance } from './pages/Assurance';
+import { ChaosLabPage } from './pages/ChaosLabPage';
+import { PoliciesPage } from './pages/PoliciesPage';
+import { RollbackPage } from './pages/RollbackPage';
+import { ForensicsPage } from './pages/ForensicsPage';
+import { RoiImpactPage } from './pages/RoiImpactPage';
 import { useVectorAssurance } from './hooks/useVectorAssurance';
 
 export function App() {
@@ -21,7 +26,7 @@ export function App() {
     avatarInitials: 'AC'
   });
 
-  // Active console tab: 'dashboard' | 'digital-twin' | 'assurance'
+  // Active console tab: 'dashboard' | 'chaos' | 'assurance' | 'digital-twin' | 'policies' | 'rollback' | 'forensics' | 'roi'
   const [currentTab, setCurrentTab] = useState('dashboard');
 
   const {
@@ -44,6 +49,21 @@ export function App() {
   const handleNavigateToAssurance = (scenarioKey = 'safe') => {
     selectScenario(scenarioKey);
     setCurrentTab('assurance');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNavigateToForensics = () => {
+    setCurrentTab('forensics');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNavigateToPolicies = () => {
+    setCurrentTab('policies');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNavigateToRollback = () => {
+    setCurrentTab('rollback');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -131,6 +151,13 @@ export function App() {
             />
           )}
 
+          {currentTab === 'chaos' && (
+            <ChaosLabPage
+              onNavigateToAssurance={handleNavigateToAssurance}
+              onNavigateToForensics={handleNavigateToForensics}
+            />
+          )}
+
           {currentTab === 'digital-twin' && (
             <DigitalTwin
               assuranceResult={assuranceResult}
@@ -150,6 +177,28 @@ export function App() {
               onRequestHumanApproval={triggerHumanApprovalRequest}
               onResetExecution={resetExecution}
               onBackToDashboard={handleBackToDashboard}
+            />
+          )}
+
+          {currentTab === 'policies' && (
+            <PoliciesPage
+              onNavigateToAssurance={handleNavigateToAssurance}
+            />
+          )}
+
+          {currentTab === 'rollback' && (
+            <RollbackPage
+              onNavigateToAssurance={handleNavigateToAssurance}
+            />
+          )}
+
+          {currentTab === 'forensics' && (
+            <ForensicsPage />
+          )}
+
+          {currentTab === 'roi' && (
+            <RoiImpactPage
+              onNavigateToAssurance={handleNavigateToAssurance}
             />
           )}
         </main>
